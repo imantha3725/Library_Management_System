@@ -1,0 +1,2 @@
+RoundedImageComponent
+Components.RoundedImageComponent
