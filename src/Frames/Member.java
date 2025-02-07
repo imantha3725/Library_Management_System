@@ -12,13 +12,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
+ * * @version 1.0
+ * @since 2025-02-07
+
  */
 public class Member extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Member
-     */
+    
     public Member() {
         initComponents();
         setResizable(false);
@@ -332,16 +333,16 @@ setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboard1ActionPerformed
-       Dashboard dasboardFrame = new Dashboard (); // Create an instance of DasboardForm
-    dasboardFrame.setVisible(true); // Show the DasboardForm frame
-    dasboardFrame.setLocationRelativeTo(null); // Center the window
+       Dashboard dasboardFrame = new Dashboard (); 
+    dasboardFrame.setVisible(true); 
+    dasboardFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnDashboard1ActionPerformed
 
     private void btnAuthors1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthors1ActionPerformed
-        Author authorFrame = new Author(); // Create an instance of AuthorForm
-    authorFrame.setVisible(true); // Show the AuthorForm frame
-    authorFrame.setLocationRelativeTo(null); // Center the window
+        Author authorFrame = new Author(); 
+    authorFrame.setVisible(true); 
+    authorFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnAuthors1ActionPerformed
 
@@ -366,7 +367,7 @@ setLocationRelativeTo(null);
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE);
     
-    // If user clicks Yes, proceed with logout
+   
     if (choice == JOptionPane.YES_OPTION) {
         LoginForm loginFrame = new LoginForm();
         loginFrame.setVisible(true);
@@ -382,16 +383,16 @@ setLocationRelativeTo(null);
     ResultSet rs = null;
     
     try {
-        // Prepare SQL query to fetch all members
+        
         String sql = "SELECT * FROM member";
         pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
 
-        // Get table model from "member_tb" and clear existing data
+        
         DefaultTableModel model = (DefaultTableModel) member_tb.getModel();
-        model.setRowCount(0); // Remove old data
+        model.setRowCount(0); 
 
-        // Loop through the result set and add data to JTable
+       
         while (rs.next()) {
             String memberId = rs.getString("member_id");
             String memberName = rs.getString("member_name");
@@ -399,7 +400,7 @@ setLocationRelativeTo(null);
             String contact = rs.getString("contact");
             String address = rs.getString("address");
 
-            // Add row to JTable
+       
             model.addRow(new Object[]{memberId, memberName, email, contact, address});
         }
 
@@ -431,14 +432,14 @@ setLocationRelativeTo(null);
     PreparedStatement pst = null;
 
     try {
-        // Get values from text fields
+      
         String memberId = txtMemberId.getText().trim();
         String memberName = txtMemberName.getText().trim();
         String email = txtMemberEmail.getText().trim();
         String contact = txtMemberContact.getText().trim();
         String address = txtMemberAddress.getText().trim();
 
-        // Input validation
+      
         if (memberId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Member ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtMemberId.requestFocus();
@@ -451,7 +452,7 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Basic email validation
+       
         if (email.isEmpty() || !email.contains("@") || !email.contains(".")) {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtMemberEmail.requestFocus();
@@ -470,13 +471,13 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Check if connection is valid
+       
         if (con == null || con.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Check if Member ID already exists
+        
         PreparedStatement checkStmt = con.prepareStatement("SELECT member_id FROM member WHERE member_id = ?");
         checkStmt.setString(1, memberId);
         ResultSet rs = checkStmt.executeQuery();
@@ -487,7 +488,7 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Prepare and execute insert statement
+        
         pst = con.prepareStatement("INSERT INTO member (member_id, member_name, email, contact, address) VALUES (?, ?, ?, ?, ?)");
 
         pst.setString(1, memberId);
@@ -500,8 +501,8 @@ setLocationRelativeTo(null);
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Member Record Inserted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadMemberData();  // Refresh the table
-            clearFields();     // Clear input fields
+            loadMemberData(); 
+            clearFields();    
         } else {
             JOptionPane.showMessageDialog(this, "Failed to insert record", "Insert Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -527,14 +528,14 @@ setLocationRelativeTo(null);
     PreparedStatement pst = null;
 
     try {
-        // Get values from text fields
+        
         String memberId = txtMemberId.getText().trim();
         String memberName = txtMemberName.getText().trim();
         String email = txtMemberEmail.getText().trim();
         String contact = txtMemberContact.getText().trim();
         String address = txtMemberAddress.getText().trim();
 
-        // Input validation
+      
         if (memberId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Member ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtMemberId.requestFocus();
@@ -553,19 +554,19 @@ setLocationRelativeTo(null);
             return;
         }
 
-        if (contact.isEmpty() || !contact.matches("\\d+")) { // Ensuring contact contains only numbers
+        if (contact.isEmpty() || !contact.matches("\\d+")) { 
             JOptionPane.showMessageDialog(this, "Please enter a valid contact number", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtMemberContact.requestFocus();
             return;
         }
 
-        // Check if connection is valid
+       
         if (con == null || con.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Check if the record exists
+        
         PreparedStatement checkStmt = con.prepareStatement("SELECT member_id FROM member WHERE member_id = ?");
         checkStmt.setString(1, memberId);
         ResultSet rs = checkStmt.executeQuery();
@@ -575,7 +576,7 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Prepare and execute update statement
+       
         pst = con.prepareStatement("UPDATE member SET member_name = ?, email = ?, contact = ?, address = ? WHERE member_id = ?");
         pst.setString(1, memberName);
         pst.setString(2, email);
@@ -587,8 +588,8 @@ setLocationRelativeTo(null);
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Record Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadMemberData();  // Refresh the table
-            clearFields();  // Clear input fields
+            loadMemberData(); 
+            clearFields(); 
         } else {
             JOptionPane.showMessageDialog(this, "No records were updated", "Update Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -614,29 +615,29 @@ setLocationRelativeTo(null);
     PreparedStatement pst = null;
 
     try {
-        // Get the Member ID from the text field
+        
         String memberId = txtMemberId.getText().trim();
 
-        // Input validation
+       
         if (memberId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Member ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtMemberId.requestFocus();
             return;
         }
 
-        // Check if connection is valid
+       
         if (con == null || con.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Confirm deletion
+        
         int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
         if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
 
-        // Check if the record exists
+       
         PreparedStatement checkStmt = con.prepareStatement("SELECT member_id FROM member WHERE member_id = ?");
         checkStmt.setString(1, memberId);
         ResultSet rs = checkStmt.executeQuery();
@@ -646,7 +647,7 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Prepare and execute delete statement
+        
         pst = con.prepareStatement("DELETE FROM member WHERE member_id = ?");
         pst.setString(1, memberId);
 
@@ -654,8 +655,8 @@ setLocationRelativeTo(null);
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Record Deleted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadMemberData();  // Refresh the table
-            clearFields();  // Clear input fields
+            loadMemberData();  
+            clearFields();  
         } else {
             JOptionPane.showMessageDialog(this, "No records were deleted", "Delete Error", JOptionPane.WARNING_MESSAGE);
         }

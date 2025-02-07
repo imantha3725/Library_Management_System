@@ -8,7 +8,7 @@ import java.sql.*;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
  */
 public class dbconnection {
    private static dbconnection instance;

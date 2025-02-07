@@ -8,7 +8,7 @@ import Frames.LoginForm;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
  */
 public class Library_Management_System {
 

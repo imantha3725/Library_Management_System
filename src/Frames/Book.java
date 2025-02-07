@@ -13,13 +13,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
+ * * @version 1.0
+ * @since 2025-02-07
+
  */
 public class Book extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Book
-     */
+    
     public Book() {
         initComponents();
         setResizable(false);
@@ -193,9 +194,19 @@ setLocationRelativeTo(null);
 
         customButton2.setText("UPDATE");
         customButton2.setButtonColor(new java.awt.Color(0, 153, 255));
+        customButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customButton2ActionPerformed(evt);
+            }
+        });
 
         customButton3.setText("DELETE");
         customButton3.setButtonColor(new java.awt.Color(255, 0, 51));
+        customButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
         roundedPanel1.setLayout(roundedPanel1Layout);
@@ -295,16 +306,16 @@ setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboard1ActionPerformed
-        Dashboard dasboardFrame = new Dashboard (); // Create an instance of DasboardForm
-    dasboardFrame.setVisible(true); // Show the DasboardForm frame
-    dasboardFrame.setLocationRelativeTo(null); // Center the window
+        Dashboard dasboardFrame = new Dashboard (); 
+    dasboardFrame.setVisible(true); 
+    dasboardFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnDashboard1ActionPerformed
 
     private void btnAuthors1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthors1ActionPerformed
-         Author authorFrame = new Author(); // Create an instance of AuthorForm
-    authorFrame.setVisible(true); // Show the AuthorForm frame
-    authorFrame.setLocationRelativeTo(null); // Center the window
+         Author authorFrame = new Author(); 
+    authorFrame.setVisible(true); 
+    authorFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnAuthors1ActionPerformed
 
@@ -329,7 +340,7 @@ setLocationRelativeTo(null);
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE);
     
-    // If user clicks Yes, proceed with logout
+   
     if (choice == JOptionPane.YES_OPTION) {
         LoginForm loginFrame = new LoginForm();
         loginFrame.setVisible(true);
@@ -345,22 +356,22 @@ setLocationRelativeTo(null);
     ResultSet rs = null;
 
     try {
-        // Prepare and execute the query
+        
         String query = "SELECT * FROM book";
         pst = con.prepareStatement(query);
         rs = pst.executeQuery();
 
-        // Get the table model
+        
         DefaultTableModel model = (DefaultTableModel) book_tb.getModel();
-        model.setRowCount(0); // Clear existing data in the table
+        model.setRowCount(0); 
 
-        // Populate table with data from database
+        
         while (rs.next()) {
             String bookId = rs.getString("book_id");
             String bookName = rs.getString("book_name");
             String author = rs.getString("author");
 
-            // Add row to table
+           
             model.addRow(new Object[]{bookId, bookName, author});
         }
 
@@ -390,12 +401,12 @@ setLocationRelativeTo(null);
     PreparedStatement pst = null;
 
     try {
-        // Get values from text fields and trim whitespace
+        
         String bookId = txtBookId.getText().trim();
         String bookName = txtBookName.getText().trim();
         String bookAuthor = txtBookAuthor.getText().trim();
 
-        // Input validation
+        
         if (bookId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Book ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtBookId.requestFocus();
@@ -412,13 +423,13 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Check if connection is valid
+        
         if (con == null || con.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Check if book ID already exists
+        
         PreparedStatement checkStmt = con.prepareStatement("SELECT book_id FROM book WHERE book_id = ?");
         checkStmt.setString(1, bookId);
         ResultSet rs = checkStmt.executeQuery();
@@ -429,7 +440,7 @@ setLocationRelativeTo(null);
             return;
         }
 
-        // Prepare and execute insert statement
+        
         pst = con.prepareStatement("INSERT INTO book (book_id, book_name, author) VALUES (?, ?, ?)");
 
         pst.setString(1, bookId);
@@ -440,8 +451,8 @@ setLocationRelativeTo(null);
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Record Inserted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadBookData();  // Refresh the table
-            clearFields();  // Clear input fields
+            loadBookData();  
+            clearFields();  
         } else {
             JOptionPane.showMessageDialog(this, "Failed to insert record", "Insert Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -460,6 +471,150 @@ setLocationRelativeTo(null);
         }
     }
     }//GEN-LAST:event_customButton1ActionPerformed
+
+    private void customButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customButton2ActionPerformed
+       dbconnection dbcon = dbconnection.getInstance();
+    Connection con = dbcon.getConnection();
+    PreparedStatement pst = null;
+
+    try {
+       
+        String bookId = txtBookId.getText().trim();
+        String bookName = txtBookName.getText().trim();
+        String author = txtBookAuthor.getText().trim();
+
+        
+        if (bookId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Book ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            txtBookId.requestFocus();
+            return;
+        }
+
+        if (bookName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Book name is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            txtBookName.requestFocus();
+            return;
+        }
+
+        if (author.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Author name is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            txtBookAuthor.requestFocus();
+            return;
+        }
+
+       
+        if (con == null || con.isClosed()) {
+            JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        PreparedStatement checkStmt = con.prepareStatement("SELECT book_id FROM book WHERE book_id = ?");
+        checkStmt.setString(1, bookId);
+        ResultSet rs = checkStmt.executeQuery();
+
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Book ID does not exist", "Update Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        pst = con.prepareStatement("UPDATE book SET book_name = ?, author = ? WHERE book_id = ?");
+        pst.setString(1, bookName);
+        pst.setString(2, author);
+        pst.setString(3, bookId);
+
+        int rowsAffected = pst.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Record Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadBookData();  
+            clearFields();  
+        } else {
+            JOptionPane.showMessageDialog(this, "No records were updated", "Update Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        String errorMessage = "Error updating record: " + ex.getMessage();
+        JOptionPane.showMessageDialog(this, errorMessage, "Database Error", JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(Book.class.getName()).log(Level.SEVERE, errorMessage, ex);
+    } finally {
+        try {
+            if (pst != null) {
+                pst.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, "Error closing statement", ex);
+        }
+    }
+    }//GEN-LAST:event_customButton2ActionPerformed
+
+    private void customButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customButton3ActionPerformed
+        dbconnection dbcon = dbconnection.getInstance();
+    Connection con = dbcon.getConnection();
+    PreparedStatement pst = null;
+
+    try {
+        
+        String bookId = txtBookId.getText().trim();
+
+      
+        if (bookId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Book ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            txtBookId.requestFocus();
+            return;
+        }
+
+       
+        if (con == null || con.isClosed()) {
+            JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+       
+        PreparedStatement checkStmt = con.prepareStatement("SELECT book_id FROM book WHERE book_id = ?");
+        checkStmt.setString(1, bookId);
+        ResultSet rs = checkStmt.executeQuery();
+
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Book ID does not exist", "Delete Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        
+        pst = con.prepareStatement("DELETE FROM book WHERE book_id = ?");
+        pst.setString(1, bookId);
+
+        int rowsAffected = pst.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Record Deleted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadBookData(); 
+            clearFields();  
+        } else {
+            JOptionPane.showMessageDialog(this, "No records were deleted", "Delete Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        String errorMessage = "Error deleting record: " + ex.getMessage();
+        JOptionPane.showMessageDialog(this, errorMessage, "Database Error", JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(Book.class.getName()).log(Level.SEVERE, errorMessage, ex);
+    } finally {
+        try {
+            if (pst != null) {
+                pst.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, "Error closing statement", ex);
+        }
+    }
+    }//GEN-LAST:event_customButton3ActionPerformed
 
     /**
      * @param args the command line arguments

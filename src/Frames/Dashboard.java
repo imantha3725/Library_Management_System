@@ -8,13 +8,14 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
+ * * @version 1.0
+ * @since 2025-02-07
+
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dashboard
-     */
+    
     public Dashboard() {
         initComponents();
         setResizable(false);
@@ -362,17 +363,17 @@ setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        Dashboard dasboardFrame = new Dashboard (); // Create an instance of DasboardForm
-    dasboardFrame.setVisible(true); // Show the DasboardForm frame
-    dasboardFrame.setLocationRelativeTo(null); // Center the window
+        Dashboard dasboardFrame = new Dashboard (); 
+    dasboardFrame.setVisible(true); 
+    dasboardFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnAuthorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthorsActionPerformed
-         Author authorFrame = new Author(); // Create an instance of AuthorForm
-    authorFrame.setVisible(true); // Show the AuthorForm frame
-    authorFrame.setLocationRelativeTo(null); // Center the window
-    this.dispose(); // Close the current Dashboard window
+         Author authorFrame = new Author(); 
+    authorFrame.setVisible(true); 
+    authorFrame.setLocationRelativeTo(null); 
+    this.dispose(); 
     }//GEN-LAST:event_btnAuthorsActionPerformed
 
     private void btnMembersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembersActionPerformed
@@ -396,7 +397,7 @@ setLocationRelativeTo(null);
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE);
     
-    // If user clicks Yes, proceed with logout
+    
     if (choice == JOptionPane.YES_OPTION) {
         LoginForm loginFrame = new LoginForm();
         loginFrame.setVisible(true);

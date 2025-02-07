@@ -10,23 +10,21 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
  */
 public class LoginForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginForm
-     */
+    
     public LoginForm() {
         initComponents();
-        //center
+       
         this.setLocationRelativeTo(null);
         
         displayImage();
         
     }
     
-    //function to image
+   
     public void displayImage()
     {
         ImageIcon imgIco = new ImageIcon(getClass().getResource("/Images/books.png"));
@@ -153,27 +151,27 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Get the entered username and password
+        
     String username = txtUser.getText();
     String password = txtPass.getText();
     
-    // Check if credentials match
+    
     if (username.equals("admin") && password.equals("admin")) {
-        // Create and show dashboard
+       
         Dashboard dashboardFrame = new Dashboard();
         dashboardFrame.setVisible(true);
         dashboardFrame.setLocationRelativeTo(null);
-        this.dispose(); // Close login window
+        this.dispose(); 
     } else {
-        // Show error message if credentials are incorrect
+        
         JOptionPane.showMessageDialog(this,
             "Invalid Username or Password!",
             "Login Error",
             JOptionPane.ERROR_MESSAGE);
         
-        // Clear the password field
+        
         txtPass.setText("");
-        // Optional: Put focus back to username field
+        
         txtUser.requestFocus();
     }
     }//GEN-LAST:event_jButton1ActionPerformed

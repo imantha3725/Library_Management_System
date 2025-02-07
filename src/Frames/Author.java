@@ -12,7 +12,10 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author imant
+ * @author KADSE241F-042
+ * * @version 1.0
+ * @since 2025-02-07
+
  */
 public class Author extends javax.swing.JFrame {
 
@@ -70,23 +73,23 @@ init();
     ResultSet rs = null;
 
     try {
-        // Prepare SQL query to fetch all authors
+       
         String sql = "SELECT * FROM author";
         pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
 
-        // Get table model from "author_tb" and clear existing data
+        
         DefaultTableModel model = (DefaultTableModel) author_tb.getModel();
-        model.setRowCount(0); // Remove old data
+        model.setRowCount(0); 
 
-        // Loop through the result set and add data to JTable
+        
         while (rs.next()) {
             String authorId = rs.getString("authorid");
             String authorName = rs.getString("authorname");
             String email = rs.getString("email");
             String contact = rs.getString("contact");
 
-            // Add row to JTable
+            
             model.addRow(new Object[]{authorId, authorName, email, contact});
         }
 
@@ -395,16 +398,16 @@ init();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        Dashboard dasboardFrame = new Dashboard (); // Create an instance of DasboardForm
-    dasboardFrame.setVisible(true); // Show the DasboardForm frame
-    dasboardFrame.setLocationRelativeTo(null); // Center the window
+        Dashboard dasboardFrame = new Dashboard (); 
+    dasboardFrame.setVisible(true); 
+    dasboardFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnAuthorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuthorsActionPerformed
-        Author authorFrame = new Author(); // Create an instance of AuthorForm
-    authorFrame.setVisible(true); // Show the AuthorForm frame
-    authorFrame.setLocationRelativeTo(null); // Center the window
+        Author authorFrame = new Author(); 
+    authorFrame.setVisible(true); 
+    authorFrame.setLocationRelativeTo(null); 
     this.dispose();
     }//GEN-LAST:event_btnAuthorsActionPerformed
 
@@ -429,7 +432,7 @@ init();
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE);
     
-    // If user clicks Yes, proceed with logout
+    
     if (choice == JOptionPane.YES_OPTION) {
         LoginForm loginFrame = new LoginForm();
         loginFrame.setVisible(true);
@@ -452,7 +455,7 @@ init();
         String email = txtauthorEmail.getText();
         int contact = Integer.parseInt(txtauthorId.getText());
         
-        // Input validation
+       
           if (txtauthorId.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Author ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtauthorId.requestFocus();
@@ -465,20 +468,20 @@ init();
             return;
         }
         
-        // Basic email validation
+       
         if (email.isEmpty() || !email.contains("@") || !email.contains(".")) {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtauthorEmail.requestFocus();
             return;
         }
         
-        // Check if connection is valid
+        
         if (connection == null || connection.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Check if student ID already exists
+        
          checkStmt = connection.prepareStatement("SELECT authorid FROM author WHERE studentid = ?");
         checkStmt.setInt(1, authorid);
         rs = checkStmt.executeQuery();
@@ -489,7 +492,7 @@ init();
             return;
         }
         
-        // Prepare and execute insert statement
+        
         pst = connection.prepareStatement("INSERT INTO author (authorid, authorname, email, contact) VALUES (?, ?, ?, ?)");
 
         pst.setInt(1, authorid);
@@ -502,7 +505,7 @@ init();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Record Inserted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             loadAuthorData();
-            // Clear the input fields
+           
             clearFields();
         } else {
             JOptionPane.showMessageDialog(this, "Failed to insert record", "Insert Error", JOptionPane.WARNING_MESSAGE);
@@ -536,13 +539,13 @@ init();
     ResultSet rs = null;
 
     try {
-        // Get values from text fields and trim whitespace
+        
         String authorid = txtauthorId.getText().trim();
         String authorname = txtauthorName.getText().trim();
         String email = txtauthorEmail.getText().trim();
         String contact = txtauthorContact.getText().trim();
 
-        // Input validation
+       
         if (authorid.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Author ID is required", "Validation Error", JOptionPane.WARNING_MESSAGE);
             txtauthorId.requestFocus();
@@ -567,13 +570,13 @@ init();
             return;
         }
 
-        // Check if connection is valid
+       
         if (con == null || con.isClosed()) {
             JOptionPane.showMessageDialog(this, "Database connection is not available", "Connection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Check if the record exists
+       
         PreparedStatement checkStmt = con.prepareStatement("SELECT authorid FROM author WHERE authorid = ?");
         checkStmt.setString(1, authorid);
         rs = checkStmt.executeQuery();
@@ -583,7 +586,7 @@ init();
             return;
         }
 
-        // Prepare and execute update statement
+        
         pst = con.prepareStatement("UPDATE author SET authorname = ?, email = ?, contact = ? WHERE authorid = ?");
         
         pst.setString(1, authorname);
@@ -595,8 +598,8 @@ init();
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Record Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadAuthorData();  // Refresh the table/display
-            clearFields();  // Clear the input fields
+            loadAuthorData();  
+            clearFields();  
         } else {
             JOptionPane.showMessageDialog(this, "No records were updated", "Update Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -638,8 +641,8 @@ init();
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Record Deleted Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-                loadAuthorData();  // Refresh the table
-                clearFields();     // Clear input fields
+                loadAuthorData();  
+                clearFields();     
             } else {
                 JOptionPane.showMessageDialog(this, "No matching record found", "Delete Error", JOptionPane.WARNING_MESSAGE);
             }
